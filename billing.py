@@ -10,7 +10,7 @@ from rally.plugins.openstack.scenarios.nova import utils as nova_utils
 from rally.task import types
 from rally.task import validation
 
-"""Scenario for Billing Checking""" 
+"""Scenario for Billing Checking page""" 
 
 LOG = logging.getLogger(__name__)
 
@@ -45,7 +45,7 @@ class BillingNoPayment(nova_utils.NovaScenario):
 @validation.add("required_services", services=[consts.Service.NOVA])
 @validation.add("required_platform", platform="openstack", users=True)
 @scenario.configure(context={"cleanup@openstack": ["nova"]},
-                    name="NipaCloud.Billing_continue_payment",
+                    name="NipaCloud.billing_continue_payment",
                     platform="openstack")
 class BillingContinuePayment(nova_utils.NovaScenario):
 

@@ -10,8 +10,9 @@ from rally.plugins.openstack.wrappers import network as network_wrapper
 from rally.task import validation
 from rally.task import types
 
+LOG = logging.getLogger(__name__)
 
-"""Scenarios for External IP"""
+"""Scenarios for External IP page"""
 
 @validation.add("required_services",
                 services=[consts.Service.NEUTRON])

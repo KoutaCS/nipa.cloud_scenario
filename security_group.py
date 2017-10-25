@@ -1,18 +1,20 @@
+import jsonschema
+
 from rally import consts
 from rally.plugins.openstack import scenario
 from rally.plugins.openstack.scenarios.neutron import utils
 from rally.task import validation
 
-"""Scenarios for Security Group"""
+"""Scenarios for Security Group page"""
 
 @validation.add("required_services",
                 services=[consts.Service.NEUTRON])
 @validation.add("required_platform", platform="openstack", users=True)
 @scenario.configure(
     context={"cleanup@openstack": ["neutron"]},
-    name="NipaCloudSecurityGroup.create_and_delete_rule",
+    name="NipaCloud.create_and_delete_security_group_rule",
     platform="openstack")
-class CreateAndDeleteRule(utils.NeutronScenario):
+class CreateAndDeleteSecurityGroupRule(utils.NeutronScenario):
 
     def run(self, security_group_args=None,
             security_group_rule_args=None):
@@ -47,9 +49,9 @@ class CreateAndDeleteRule(utils.NeutronScenario):
 @validation.add("required_platform", platform="openstack", users=True)
 @scenario.configure(
     context={"cleanup@openstack": ["neutron"]},
-    name="NipaCloudSecurityGroup.create_and_delete",
+    name="NipaCloud.create_and_delete_security_group",
     platform="openstack")
-class CreateAndDelete(utils.NeutronScenario):
+class CreateAndDeleteSecurityGroup(utils.NeutronScenario):
 
     def run(self, security_group_create_args=None):
         """Create and delete Neutron security-groups.
