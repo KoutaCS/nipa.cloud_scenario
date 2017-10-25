@@ -1,5 +1,3 @@
-import jsonschema
-
 from rally import consts
 from rally.plugins.openstack import scenario
 from rally.plugins.openstack.scenarios.neutron import utils

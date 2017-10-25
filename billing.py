@@ -6,7 +6,7 @@ from rally import exceptions as rally_exceptions
 from rally.plugins.openstack import scenario
 from rally.plugins.openstack.scenarios.cinder import utils as cinder_utils
 from rally.plugins.openstack.scenarios.neutron import utils as neutron_utils
-from rally.plugins.openstack.scenarios.nova import utils
+from rally.plugins.openstack.scenarios.nova import utils as nova_utils
 from rally.task import types
 from rally.task import validation
 
@@ -21,12 +21,12 @@ LOG = logging.getLogger(__name__)
 @validation.add("required_services", services=[consts.Service.NOVA])
 @validation.add("required_platform", platform="openstack", users=True)
 @scenario.configure(context={"cleanup@openstack": ["nova"]},
-                    name="NipaCloudBilling.no_payment",
+                    name="NipaCloud.billing_no_payment",
                     platform="openstack")
-class NoPayment(utils.NovaScenario):
+class BillingNoPayment(nova_utils.NovaScenario):
 
     def run(self, image, flavor, force_delete=False):
-        """Boot a server, pause and lock it, then delete it.
+        """Boot a server, pause and lock it, unlock then delete it.
         :param image: image to be used to boot an instance
         :param flavor: flavor to be used to boot an instance
         :param force_delete: True if force_delete should be used
@@ -34,6 +34,7 @@ class NoPayment(utils.NovaScenario):
         server = self._boot_server(image, flavor)
         self._pause_server(server)
         self._lock_server(server)
+        self._unlock_server(server)
         self._delete_server(server, force=force_delete)
 
 
@@ -44,9 +45,9 @@ class NoPayment(utils.NovaScenario):
 @validation.add("required_services", services=[consts.Service.NOVA])
 @validation.add("required_platform", platform="openstack", users=True)
 @scenario.configure(context={"cleanup@openstack": ["nova"]},
-                    name="NipaCloudBilling.continue_payment",
+                    name="NipaCloud.Billing_continue_payment",
                     platform="openstack")
-class ContinuePayment(utils.NovaScenario):
+class BillingContinuePayment(nova_utils.NovaScenario):
 
     def run(self, image, flavor, force_delete=False):
         """Create a server, pause, unpause and then delete it
