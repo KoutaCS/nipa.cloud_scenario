@@ -47,7 +47,7 @@ class LaunchSingleInstance(nova_utils.NovaScenario):
 @scenario.configure(context={"cleanup@openstack": ["nova"]},
                     name="NovaServers.boot_and_delete_multiple_servers",
                     platform="openstack")
-class BootAndDeleteMultipleServers(utils.NovaScenario):
+class BootAndDeleteMultipleServers(nova_utils.NovaScenario):
 
     def run(self, image, flavor, count=5, force_delete=False):
         """Boot multiple servers in a single request and delete them.
