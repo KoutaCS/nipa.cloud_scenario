@@ -1,6 +1,3 @@
-import jsonschema
-
-from rally.common import logging
 from rally import consts
 from rally.plugins import scenario
 from rally.plugins.openstack.nova import utils as nova_utils
@@ -20,7 +17,7 @@ from rally.task import validation
                     name="NipaCloud.resize_instance_and_turnon", platform="openstack")
 class ResizeInstanceAndTurnon(nova_utils.NovaScenario):
 
-    def run(self, image, flavor, to_flavor, confirm=True, force_delete=False, **kwargs):
+    def run(self, image, flavor, to_flavor, confirm=True, force_delete=False):
         """Boot a server, then resize and delete it.
 
         This test will confirm the resize by default,
@@ -32,14 +29,13 @@ class ResizeInstanceAndTurnon(nova_utils.NovaScenario):
         :param force_delete: True if force_delete should be used
         :param kwargs: Optional additional arguments for server creation
         """
-        server = self._boot_server(image, flavor, **kwargs)
+        server = self._boot_server(image, flavor)
         self._stop_server(server)
         self._resize(server, to_flavor)
         if confirm:
             self._resize_confirm(server, "SHUTOFF")
         else:
             self._resize_revert(server, "SHUTOFF")
-        
         self._boot_server(image, flavor)
         self._delete_server(server, force=force_delete)
 
@@ -52,11 +48,10 @@ class ResizeInstanceAndTurnon(nova_utils.NovaScenario):
 @validation.add("required_platform", platform="openstack", users=True)
 @scenario.configure(context={"cleanup@openstack": ["nova"]},
                     name="NipaCloud.power_off_and_on_instance", platform="openstack")
-class PowerOffAndOnInstance(nova_utils.NovaScenario)
+class PowerOffAndOnInstance(nova_utils.NovaScenario):
 
     def run(self, image, flavor, force_delete=False):
-
-        server= self._boot_server(image, flavor)
+        server = self._boot_server(image, flavor)
         self._stop_server(server)
         self._start_server(server)
         self._delete_server(server, force=force_delete)
@@ -70,11 +65,10 @@ class PowerOffAndOnInstance(nova_utils.NovaScenario)
 @validation.add("required_platform", platform="openstack", users=True)
 @scenario.configure(context={"cleanup@openstack": ["nova"]},
                     name="NipaCloud.soft_reboot_instance", platform="openstack")
-class SoftRebootInstance(nova_utils.NovaScenario)
+class SoftRebootInstance(nova_utils.NovaScenario):
 
     def run(self, image, flavor, force_delete=False):
-
-        server= self._boot_server(image, flavor)
+        server = self._boot_server(image, flavor)
         self._soft_reboot_server(server)
         self._delete_server(server, force=force_delete)
 
@@ -87,11 +81,10 @@ class SoftRebootInstance(nova_utils.NovaScenario)
 @validation.add("required_platform", platform="openstack", users=True)
 @scenario.configure(context={"cleanup@openstack": ["nova"]},
                     name="NipaCloud.hard_reboot_instance", platform="openstack")
-class HardRebootInstance(nova_util.NovaScenario)
+class HardRebootInstance(nova_utils.NovaScenario):
 
-    def run(self, image, flavor, force_delete=False):
-        
-        server= self._boot_server(image, flavor)
+    def run(self, image, flavor, force_delete=False): 
+        server = self._boot_server(image, flavor)
         self._reboot_server(server)
         self._delete_server(server, force=force_delete)
 
@@ -104,9 +97,8 @@ class HardRebootInstance(nova_util.NovaScenario)
 @validation.add("required_platform", platform="openstack", users=True)
 @scenario.configure(context={"cleanup@openstack": ["nova"]},
                     name="NipaCloud.destroy_instance", platform="openstack")
-class DestroyInstance(nova_utils.NovaScenario)
+class DestroyInstance(nova_utils.NovaScenario):
 
     def run(self, image, flavor):
-
-        server= self._boot_server(image, flavor)
+        server = self._boot_server(image, flavor)
         self._delete_server(server, force=True)
