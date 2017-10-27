@@ -3,7 +3,6 @@ import jsonschema
 from rally.common import logging
 from rally import consts
 from rally.plugins.openstack import scenario
-from rally.plugins.openstack.scenarios.cinder import utils as cinder_utils
 from rally.plugins.openstack.scenarios.neutron import utils as neutron_utils
 from rally.plugins.openstack.scenarios.nova import utils as nova_utils
 from rally.plugins.openstack.wrappers import network as network_wrapper

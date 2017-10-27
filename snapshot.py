@@ -5,7 +5,6 @@ from rally import consts
 from rally import exceptions as rally_exceptions
 from rally.plugins.openstack import scenario
 from rally.plugins.openstack.scenarios.nova import utils as nova.utils 
-from rally.plugins.openstack.scenarios.neutron import utils as neutron.utils
 from rally.task import types
 from rally.task import validation
 
