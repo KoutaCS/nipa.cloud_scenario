@@ -26,10 +26,11 @@ from rally.task import validation
 @scenario.configure(context={"cleanup@openstack": ["nova", "neutron.floatingip"]},
                     name="NipaCloud.launch_single_instance", platform="openstack")
 class LaunchSingleInstance(nova_utils.NovaScenario):
-    def run(self, image, flavor, force_delete=False):
+    def run(self, image, flavor, force_delete=False, security_group_create_args=None):
         keypair = self._create_keypair()
         server = self._boot_server(image, flavor, key_name=keypair)
-        security_group = self._create_security_group()
+        security_group_create_args = security_group_create_args or {}
+        security_group = self._create_security_group(**security_group_create_args)
         self._add_server_secgroups(server, security_group)
         address = network_wrapper.wrap(self.clients, self).create_floating_ip(
             tenant_id=server.tenant_id)
