@@ -2,7 +2,7 @@ import jsonschema
 
 from rally.common import logging
 from rally import consts
-from rally.plugins import scenario 
+from rally.plugins.openstack import scenario 
 from rally.plugins.openstack.nova import utils as nova_utils
 from rally.plugins.openstack.wrappers import network as network_wrapper
 from rally.task import types

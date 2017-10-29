@@ -1,5 +1,5 @@
 from rally import consts
-from rally.plugins import scenario
+from rally.plugins.openstack import scenario
 from rally.plugins.openstack.nova import utils as nova_utils
 from rally.task import types
 from rally.task import validation
