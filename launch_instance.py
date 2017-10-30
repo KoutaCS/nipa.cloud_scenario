@@ -29,7 +29,6 @@ class LaunchSingleInstance(nova_utils.NovaScenario, neutron_utils.NeutronScenari
         keypair = self._create_keypair()
         security_group = self._create_security_group()
         server = self._boot_server(image, flavor, key_name=keypair, secgroups=security_group)
-        address = network_wrapper.wrap(self.clients, self).create_floating_ip(
-            tenant_id=server.tenant_id)
+        address = network_wrapper.wrap(self.clients, self).create_floating_ip(tenant_id=server.tenant_id)
         self._associate_floating_ip(server, address["ip"])
         self._delete_server(server, force=force_delete)
