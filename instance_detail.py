@@ -98,7 +98,6 @@ class HardRebootInstance(nova_utils.NovaScenario):
 @scenario.configure(context={"cleanup@openstack": ["nova"]},
                     name="NipaCloud.destroy_instance", platform="openstack")
 class DestroyInstance(nova_utils.NovaScenario):
-
     def run(self, image, flavor):
         server = self._boot_server(image, flavor)
         self._delete_server(server, force=True)
