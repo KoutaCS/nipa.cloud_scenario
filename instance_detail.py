@@ -14,8 +14,8 @@ from rally.task import validation
 @validation.add("required_services", services=(consts.Service.NOVA))
 @validation.add("required_platform", platform="openstack", users=True)
 @scenario.configure(context={"cleanup@openstack": ["nova"]},
-                    name="NipaCloud.resize_instance_and_turnon", platform="openstack")
-class ResizeInstanceAndTurnon(nova_utils.NovaScenario):
+                    name="NipaCloud.resize_instance", platform="openstack")
+class ResizeInstance(nova_utils.NovaScenario):
 
     def run(self, image, flavor, to_flavor, confirm=True, force_delete=False):
         """Boot a server, then resize and delete it.
@@ -47,8 +47,8 @@ class ResizeInstanceAndTurnon(nova_utils.NovaScenario):
 @validation.add("required_services", services=(consts.Service.NOVA))
 @validation.add("required_platform", platform="openstack", users=True)
 @scenario.configure(context={"cleanup@openstack": ["nova"]},
-                    name="NipaCloud.power_off_and_on_instance", platform="openstack")
-class PowerOffAndOnInstance(nova_utils.NovaScenario):
+                    name="NipaCloud.power_off_instance", platform="openstack")
+class PowerOffInstance(nova_utils.NovaScenario):
 
     def run(self, image, flavor, force_delete=False):
         server = self._boot_server(image, flavor)
