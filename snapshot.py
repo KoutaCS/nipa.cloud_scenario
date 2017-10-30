@@ -58,10 +58,10 @@ class BootBySnapshot(nova_utils.NovaScenario):
         :param kwargs: Optional additional arguments for server creation
         """
 
-        server = self._boot_server(image, flavor, **kwargs)
+        server = self._boot_server(image, flavor)
         image = self._create_image(server)
         self._delete_server(server, force=force_delete)
 
-        server = self._boot_server(image.id, flavor, **kwargs)
+        server = self._boot_server(image.id, flavor)
         self._delete_server(server, force=force_delete)
         self._delete_image(image)
