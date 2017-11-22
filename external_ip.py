@@ -65,10 +65,8 @@ class BootAssociateDissociateFloatingIPAndDelete(nova_utils.NovaScenario):
         self.sleep_between(15, 15)
         address = network_wrapper.wrap(self.clients, self).create_floating_ip(
             tenant_id=server.tenant_id)
-        self.sleep_between(15, 15)
         self._associate_floating_ip(server, address["ip"])
         self.sleep_between(15, 15)
         self._dissociate_floating_ip(server, address["ip"])
-        self.sleep_between(15, 15)
         self._delete_server(server, force=force_delete)
         

@@ -60,7 +60,6 @@ class BootWithKeypair(nova_utils.NovaScenario):
         """
 
         boot_server_kwargs = boot_server_kwargs or server_kwargs or {}
-        self.sleep_between(15, 15)
         keypair = self._create_keypair(**kwargs)
         self.sleep_between(15, 15)
         server = self._boot_server(image, flavor,
@@ -68,5 +67,4 @@ class BootWithKeypair(nova_utils.NovaScenario):
                                    **boot_server_kwargs)
         self.sleep_between(15, 15)
         self._delete_server(server)
-        self.sleep_between(15, 15)
         self._delete_keypair(keypair)
