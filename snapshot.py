@@ -33,7 +33,9 @@ class TakeAndDeleteSnapshot(nova_utils.NovaScenario):
         """
 
         server = self._boot_server(image, flavor)
+        self.sleep_between(15, 15)
         image = self._create_image(server)
+        self.sleep_between(15, 15)
         self._delete_server(server, force=force_delete)
         self._delete_image(image)
 
@@ -59,9 +61,12 @@ class BootBySnapshot(nova_utils.NovaScenario):
         """
 
         server = self._boot_server(image, flavor)
-        image = self._create_image(server)
+        self.sleep_between(15, 15)
+        snapshot = self._create_image(server)
+        self.sleep_between(15, 15)
         self._delete_server(server, force=force_delete)
-
-        server = self._boot_server(image.id, flavor)
+        self.sleep_between(15, 15)
+        server = self._boot_server(snapshot, flavor)
+        self.sleep_between(15, 15)
         self._delete_server(server, force=force_delete)
-        self._delete_image(image)
+        self._delete_image(snapshot)

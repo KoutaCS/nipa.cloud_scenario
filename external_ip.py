@@ -34,6 +34,7 @@ class CreateAndDeleteFloatingIP(neutron_utils.NeutronScenario):
         floating_ip_args = floating_ip_args or {}
         floating_ip = self._create_floatingip(floating_network,
                                               **floating_ip_args)
+        self.sleep_between(15, 15)
         self._delete_floating_ip(floating_ip["floatingip"])
 
 @types.convert(image={"type": "glance_image"},
@@ -61,8 +62,13 @@ class BootAssociateDissociateFloatingIPAndDelete(nova_utils.NovaScenario):
         :param kwargs: Optional additional arguments for server creation
         """
         server = self._boot_server(image, flavor)
+        self.sleep_between(15, 15)
         address = network_wrapper.wrap(self.clients, self).create_floating_ip(
             tenant_id=server.tenant_id)
+        self.sleep_between(15, 15)
         self._associate_floating_ip(server, address["ip"])
+        self.sleep_between(15, 15)
         self._dissociate_floating_ip(server, address["ip"])
+        self.sleep_between(15, 15)
         self._delete_server(server, force=force_delete)
+        

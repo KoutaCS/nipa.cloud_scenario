@@ -39,7 +39,7 @@ class CreateAndDeleteSecurityGroupRule(utils.NeutronScenario):
             security_group["security_group"]["id"], **security_group_rule_args)
         msg = "security_group_rule isn't created"
         self.assertTrue(security_group_rule, err_msg=msg)
-
+        self.sleep_between(15, 15)
         self._delete_security_group_rule(
             security_group_rule["security_group_rule"]["id"])
         self._delete_security_group(security_group)
@@ -65,4 +65,5 @@ class CreateAndDeleteSecurityGroup(utils.NeutronScenario):
         security_group_create_args = security_group_create_args or {}
         security_group = self._create_security_group(
             **security_group_create_args)
+        self.sleep_between(15, 15)
         self._delete_security_group(security_group)
