@@ -51,7 +51,7 @@ class BillingNoPayment(nova_utils.NovaScenario):
                     platform="openstack")
 class BillingContinuePayment(nova_utils.NovaScenario):
 
-    def run(self, image, flavor, force_delete):
+    def run(self, image, flavor, force_delete=False):
         """Create a server, pause, unpause and then delete it
         :param image: image to be used to boot an instance
         :param flavor: flavor to be used to boot an instance
@@ -67,3 +67,4 @@ class BillingContinuePayment(nova_utils.NovaScenario):
         self.sleep_between(5, 5)
         self._unpause_server(server)
         self.sleep_between(5, 5)
+        self._delete_server(server, force=force_delete)
