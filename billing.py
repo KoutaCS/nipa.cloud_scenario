@@ -30,13 +30,13 @@ class BillingNoPayment(nova_utils.NovaScenario):
         :param force_delete: True if force_delete should be used
         """
         server = self._boot_server(image, flavor)
-        self.sleep_between(15, 15)
+        self.sleep_between(5, 5)
         self._pause_server(server)
-        self.sleep_between(15, 15)
+        self.sleep_between(5, 5)
         self._lock_server(server)
-        self.sleep_between(15, 15)
+        self.sleep_between(5, 5)
         self._unlock_server(server)
-        self.sleep_between(15, 15)
+        self.sleep_between(5, 5)
         self._delete_server(server, force=force_delete)
 
 
@@ -58,13 +58,13 @@ class BillingContinuePayment(nova_utils.NovaScenario):
         :param force_delete: True if force_delete should be used
         """
         server = self._boot_server(image, flavor)
-        self.sleep_between(15, 15)
+        self.sleep_between(5, 5)
         self._pause_server(server)
-        self.sleep_between(15, 15)
+        self.sleep_between(5, 5)
         self._lock_server(server)
-        self.sleep_between(15, 15)
+        self.sleep_between(5, 5)
         self._unlock_server(server)
-        self.sleep_between(15, 15)
+        self.sleep_between(5, 5)
         self._unpause_server(server)
-        self.sleep_between(15, 15)
+        self.sleep_between(5, 5)
         self._delete_server(server, force=force_delete)
