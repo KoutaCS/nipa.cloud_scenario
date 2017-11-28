@@ -25,7 +25,7 @@ class StagingBoot(nova_utils.NovaScenario):
 
     def run(self, image, flavor, force_delete=False):
         server = self._boot_server(image, flavor)
-        self.sleep_between(5, 5))
+        self.sleep_between(5, 5)
         self._delete_server(server, force=force_delete)
 
 @types.convert(image={"type": "glance_image"},
