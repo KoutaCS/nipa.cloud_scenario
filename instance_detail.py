@@ -40,7 +40,7 @@ class ResizeInstance(nova_utils.NovaScenario):
         else:
             self._resize_revert(server, "SHUTOFF")
         self.sleep_between(5, 5)
-        self._boot_server(image, flavor)
+        self._start_server(server)
         self.sleep_between(5, 5)
         self._delete_server(server, force=force_delete)
 
