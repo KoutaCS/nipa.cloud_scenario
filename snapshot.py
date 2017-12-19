@@ -67,7 +67,7 @@ class BootBySnapshot(nova_utils.NovaScenario, glance_utils.GlanceScenario):
         self.sleep_between(5, 5)
         self._delete_server(server, force=force_delete)
         self.sleep_between(5, 5)
-        mirror_server = self._boot_server(snapshot, flavor)
+        mirror_server = self._boot_server(snapshot, flavor, **kwargs)
         self.sleep_between(5, 5)
         self._delete_server(mirror_server, force=force_delete)
         self._delete_image(snapshot)
