@@ -50,7 +50,7 @@ class CreateAndDeleteFloatingIP(neutron_utils.NeutronScenario):
     platform="openstack")
 class BootAssociateDissociateFloatingIPAndDelete(nova_utils.NovaScenario):
 
-    def run(self, image, flavor, force_delete=False):
+    def run(self, image, flavor, force_delete=False, **kwargs):
         """Boot a server associate and dissociate a floating IP from it.
 
         The scenario first boot a server and create a floating IP. then
@@ -59,9 +59,10 @@ class BootAssociateDissociateFloatingIPAndDelete(nova_utils.NovaScenario):
 
         :param image: image to be used to boot an instance
         :param flavor: flavor to be used to boot an instance
+        :param force_delete: True if force_delete should be used
         :param kwargs: Optional additional arguments for server creation
         """
-        server = self._boot_server(image, flavor)
+        server = self._boot_server(image, flavor, **kwargs)
         self.sleep_between(5, 5)
         address = network_wrapper.wrap(self.clients, self).create_floating_ip(
             tenant_id=server.tenant_id)

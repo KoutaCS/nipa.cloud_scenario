@@ -17,7 +17,7 @@ from rally.task import validation
                     name="NipaCloud.resize_instance", platform="openstack")
 class ResizeInstance(nova_utils.NovaScenario):
 
-    def run(self, image, flavor, to_flavor, confirm=True, force_delete=False):
+    def run(self, image, flavor, to_flavor, confirm=True, force_delete=False, **kwargs):
         """Boot a server, then resize and delete it.
 
         This test will confirm the resize by default,
@@ -29,7 +29,7 @@ class ResizeInstance(nova_utils.NovaScenario):
         :param force_delete: True if force_delete should be used
         :param kwargs: Optional additional arguments for server creation
         """
-        server = self._boot_server(image, flavor)
+        server = self._boot_server(image, flavor, **kwargs)
         self.sleep_between(5, 5)
         self._stop_server(server)
         self.sleep_between(5, 5)
@@ -54,9 +54,18 @@ class ResizeInstance(nova_utils.NovaScenario):
 @scenario.configure(context={"cleanup@openstack": ["nova"]},
                     name="NipaCloud.power_off_instance", platform="openstack")
 class PowerOffInstance(nova_utils.NovaScenario):
+    
+    def run(self, image, flavor, force_delete=False, **kwargs):
+        
+        """Boot a server, then power off and on and delete it.
 
-    def run(self, image, flavor, force_delete=False):
-        server = self._boot_server(image, flavor)
+        :param image: image to be used to boot an instance
+        :param flavor: flavor to be used to boot an instance
+        :param force_delete: True if force_delete should be used
+        :param kwargs: Optional additional arguments for server creation
+        """
+
+        server = self._boot_server(image, flavor, **kwargs)
         self.sleep_between(5, 5)
         self._stop_server(server)
         self.sleep_between(5, 5)
@@ -75,8 +84,17 @@ class PowerOffInstance(nova_utils.NovaScenario):
                     name="NipaCloud.soft_reboot_instance", platform="openstack")
 class SoftRebootInstance(nova_utils.NovaScenario):
 
-    def run(self, image, flavor, force_delete=False):
-        server = self._boot_server(image, flavor)
+    def run(self, image, flavor, force_delete=False, **kwargs):
+        
+        """Boot a server, then soft reboot and delete it.
+
+        :param image: image to be used to boot an instance
+        :param flavor: flavor to be used to boot an instance
+        :param force_delete: True if force_delete should be used
+        :param kwargs: Optional additional arguments for server creation
+        """
+
+        server = self._boot_server(image, flavor, **kwargs)
         self.sleep_between(5, 5)
         self._soft_reboot_server(server)
         self.sleep_between(5, 5)
@@ -93,8 +111,17 @@ class SoftRebootInstance(nova_utils.NovaScenario):
                     name="NipaCloud.hard_reboot_instance", platform="openstack")
 class HardRebootInstance(nova_utils.NovaScenario):
 
-    def run(self, image, flavor, force_delete=False): 
-        server = self._boot_server(image, flavor)
+    def run(self, image, flavor, force_delete=False, **kwargs): 
+
+        """Boot a server, then hard reboot and delete it.
+
+        :param image: image to be used to boot an instance
+        :param flavor: flavor to be used to boot an instance
+        :param force_delete: True if force_delete should be used
+        :param kwargs: Optional additional arguments for server creation
+        """
+
+        server = self._boot_server(image, flavor, **kwargs)
         self.sleep_between(5, 5)
         self._reboot_server(server)
         self.sleep_between(5, 5)
@@ -110,7 +137,15 @@ class HardRebootInstance(nova_utils.NovaScenario):
 @scenario.configure(context={"cleanup@openstack": ["nova"]},
                     name="NipaCloud.destroy_instance", platform="openstack")
 class DestroyInstance(nova_utils.NovaScenario):
-    def run(self, image, flavor):
-        server = self._boot_server(image, flavor)
+    def run(self, image, flavor, **kwargs):
+        
+        """Boot a server and delete it.
+
+        :param image: image to be used to boot an instance
+        :param flavor: flavor to be used to boot an instance
+        :param kwargs: Optional additional arguments for server creation
+        """
+
+        server = self._boot_server(image, flavor, **kwargs)
         self.sleep_between(5, 5)
         self._delete_server(server, force=True)

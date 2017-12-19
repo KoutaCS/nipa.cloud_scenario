@@ -23,7 +23,7 @@ from rally.task import validation
                     platform="openstack")
 class TakeAndDeleteSnapshot(nova_utils.NovaScenario):
 
-    def run(self, image, flavor, force_delete=False):
+    def run(self, image, flavor, force_delete=False, **kwargs):
         """Boot a server, make its snapshot and delete both.
 
         :param image: image to be used to boot an instance
@@ -32,12 +32,12 @@ class TakeAndDeleteSnapshot(nova_utils.NovaScenario):
         :param kwargs: Optional additional arguments for server creation
         """
 
-        server = self._boot_server(image, flavor)
+        server = self._boot_server(image, flavor, **kwargs)
         self.sleep_between(5, 5)
-        image = self._create_image(server)
+        snapshot = self._create_image(server)
         self.sleep_between(5, 5)
         self._delete_server(server, force=force_delete)
-        self._delete_image(image)
+        self._delete_image(snapshot)
 
 @types.convert(image={"type": "glance_image"},
                flavor={"type": "nova_flavor"})
@@ -51,7 +51,7 @@ class TakeAndDeleteSnapshot(nova_utils.NovaScenario):
                     platform="openstack")
 class BootBySnapshot(nova_utils.NovaScenario):
 
-    def run(self, image, flavor, force_delete=False):
+    def run(self, image, flavor, force_delete=False, **kwargs):
         """Boot a server, make its snapshot and delete both.
 
         :param image: image to be used to boot an instance
@@ -60,13 +60,13 @@ class BootBySnapshot(nova_utils.NovaScenario):
         :param kwargs: Optional additional arguments for server creation
         """
 
-        server = self._boot_server(image, flavor)
+        server = self._boot_server(image, flavor, **kwargs)
         self.sleep_between(5, 5)
         snapshot = self._create_image(server)
         self.sleep_between(5, 5)
         self._delete_server(server, force=force_delete)
         self.sleep_between(5, 5)
-        server = self._boot_server(snapshot, flavor)
+        mirror_server = self._boot_server(snapshot, flavor)
         self.sleep_between(5, 5)
-        self._delete_server(server, force=force_delete)
+        self._delete_server(mirror_server, force=force_delete)
         self._delete_image(snapshot)
