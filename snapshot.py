@@ -22,7 +22,7 @@ from rally.task import validation
 @scenario.configure(context={"cleanup@openstack": ["nova", "glance"]},
                     name="NipaCloud.take_and_delete_snapshot",
                     platform="openstack")
-class TakeAndDeleteSnapshot(nova_utils.NovaScenario, glance_utils.GlanceBasic):
+class TakeAndDeleteSnapshot(nova_utils.NovaScenario, glance_utils.GlanceScenario):
 
     def run(self, image, flavor, force_delete=False, **kwargs):
         """Boot a server, make its snapshot and delete both.
@@ -50,7 +50,7 @@ class TakeAndDeleteSnapshot(nova_utils.NovaScenario, glance_utils.GlanceBasic):
 @scenario.configure(context={"cleanup@openstack": ["nova", "glance"]},
                     name="NipaCloud.boot_by_snapshot",
                     platform="openstack")
-class BootBySnapshot(nova_utils.NovaScenario, glance_utils.GlanceBasic):
+class BootBySnapshot(nova_utils.NovaScenario, glance_utils.GlanceScenario):
 
     def run(self, image, flavor, force_delete=False, **kwargs):
         """Boot a server, make its snapshot and delete both.
