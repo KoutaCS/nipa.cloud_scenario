@@ -8,6 +8,7 @@ from rally.plugins.openstack.scenarios.nova import utils as nova_utils
 from rally.plugins.openstack.wrappers import network as network_wrapper
 from rally.task import validation
 from rally.task import types
+from rally.task import utils
 
 LOG = logging.getLogger(__name__)
 
